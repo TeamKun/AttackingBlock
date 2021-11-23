@@ -1,0 +1,4 @@
+name: AttackingBlock
+version: @version@
+main: net.kunmc.lab.attackingblock.AttackingBlock
+api-version: 1.16
