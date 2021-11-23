@@ -5,6 +5,10 @@ plugins {
     id "com.github.johnrengelman.shadow" version "6.1.0"
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 group = 'net.kunmc.lab'
 version = '1.0'
 
@@ -31,7 +35,7 @@ dependencies {
     compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
     compileOnly "dev.kotx:flylib-reloaded:0.4.1"
     //compileOnly fileTree(dir: "./server/cache/", include: "patched_1.16.5.jar")
-    implementation  "com.comphenix.protocol:ProtocolLib:4.7.0"
+    compileOnly  "com.comphenix.protocol:ProtocolLib:4.7.0"
     implementation 'com.github.TeamKun:ConfigLib:0.3.8'
 }
 

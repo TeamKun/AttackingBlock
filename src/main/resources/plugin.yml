@@ -1,4 +1,5 @@
 name: AttackingBlock
-version: @version@
+version: ${project.version}
 main: net.kunmc.lab.attackingblock.AttackingBlock
 api-version: 1.16
+depend: [ ProtocolLib ]
