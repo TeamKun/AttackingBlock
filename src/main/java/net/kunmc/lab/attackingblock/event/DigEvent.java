@@ -7,6 +7,7 @@ import com.comphenix.protocol.events.PacketEvent;
 import net.kunmc.lab.attackingblock.AttackingBlock;
 import net.kunmc.lab.attackingblock.blockmob.BlockMob;
 import net.kunmc.lab.attackingblock.blockmob.BlockMobList;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -39,7 +40,8 @@ public class DigEvent {
 
                 // TODO エンティティを生み出す
                 targetBlock.removeMetadata(Const.META_DATA_KEY, AttackingBlock.plugin);
-                BlockMobList.add(new BlockMob(targetBlock, event.getPlayer()));
+                BlockMob blockMob = new BlockMob(targetBlock, event.getPlayer());
+                BlockMobList.add(blockMob);
             }
         });
     }
