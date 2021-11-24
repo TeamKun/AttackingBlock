@@ -13,12 +13,18 @@ import org.bukkit.block.Block;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Random;
+
 public class DigEvent {
 
     public static void addPacketListener() {
         ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(AttackingBlock.plugin, PacketType.Play.Client.BLOCK_DIG) {
             @Override
             public void onPacketReceiving(PacketEvent event) {
+                if (!AttackingBlock.isRunning) {
+                    return;
+                }
+
                 String digName = event.getPacket().getPlayerDigTypes().getValues().get(0).name();
                 if (!digName.equals("START_DESTROY_BLOCK")) {
                     return;
@@ -34,11 +40,20 @@ public class DigEvent {
                     return;
                 }
 
-                targetBlock.setMetadata(Const.META_DATA_KEY, new FixedMetadataValue(AttackingBlock.plugin, null));
+                try {
+                    targetBlock.setMetadata(Const.META_DATA_KEY, new FixedMetadataValue(AttackingBlock.plugin, null));
+                } catch (Exception ignored) {
 
-                // TODO 抽選
+                }
 
-                // TODO エンティティを生み出す
+                // 抽選
+                Double num = Math.random();
+
+                if (num >= AttackingBlock.config.encounterProbability.value() / 100) {
+                    return;
+                }
+
+                // エンティティを生み出す
                 targetBlock.removeMetadata(Const.META_DATA_KEY, AttackingBlock.plugin);
                 BlockMob blockMob = new BlockMob(targetBlock, event.getPlayer());
                 BlockMobList.add(blockMob);

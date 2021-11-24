@@ -33,9 +33,9 @@ repositories {
 
 dependencies {
     compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
-    compileOnly "dev.kotx:flylib-reloaded:0.4.1"
     compileOnly fileTree(dir: "./server/cache/", include: "patched_1.16.5.jar")
     compileOnly  "com.comphenix.protocol:ProtocolLib:4.7.0"
+    implementation "dev.kotx:flylib-reloaded:0.4.1"
     implementation 'com.github.TeamKun:ConfigLib:0.3.8'
 }
 

@@ -25,18 +25,19 @@ import org.bukkit.util.Vector;
 import java.util.List;
 
 public class BlockMob extends BukkitRunnable implements Listener {
-    Player target;
     FallingBlock fallingBlock;
-    int hitPoint;
     Block block;
-
     Entity armorStand;
+    Player target;
+    int hitPoint;
+    int invincibleCount;
 
     public BlockMob(Block block, Player target) {
         this.block = block;
         this.target = target;
         BlockData blockData = block.getBlockData();
-        this.hitPoint = 5;
+        this.hitPoint = AttackingBlock.config.hitPoint.value();
+        this.invincibleCount = 0;
 
         new BukkitRunnable() {
             public void run() {
@@ -62,13 +63,19 @@ public class BlockMob extends BukkitRunnable implements Listener {
     }
 
     public void kill() {
-        fallingBlock.setTicksLived(10000);
+        fallingBlock.setTicksLived(1000);
+        armorStand.remove();
         this.cancel();
     }
 
     @Override
     public void run() {
         this.fallingBlock.setTicksLived(1);
+
+        // 無敵カウントを減らす
+        if (this.invincibleCount > 0) {
+            invincibleCount --;
+        }
         // 当たり判定
         List<Entity> entityList = this.fallingBlock.getNearbyEntities(1, 1, 1);
         for (Entity entity : entityList) {
@@ -79,7 +86,7 @@ public class BlockMob extends BukkitRunnable implements Listener {
             Player player = (Player) entity;
 
             if (player.equals(this.target)) {
-                player.damage(1);
+                player.damage(AttackingBlock.config.damage.value());
             }
         }
 
@@ -92,16 +99,13 @@ public class BlockMob extends BukkitRunnable implements Listener {
         /** 差分の単位ベクトル */
         Vector differenceVector = targetPoint.subtract(blockMobPoint).normalize();
 
-        //this.armorStand.setVelocity(differenceVector.multiply(0.15));
-        teleport(this.armorStand, blockMobPoint.add(differenceVector.multiply(0.1)).toLocation(armorStand.getWorld()));
-        Bukkit.getLogger().info("yes");
+        teleport(this.armorStand, blockMobPoint.add(differenceVector.multiply(AttackingBlock.config.moveSpeed.value())).toLocation(armorStand.getWorld()));
     }
 
     private void teleport(Entity armorStand, Location to) {
         try {
             ((CraftArmorStand) armorStand).getHandle().teleportAndSync(to.getX(), to.getY(), to.getZ());
         } catch (Exception ignored) {
-            Bukkit.getLogger().info("err");
         }
     }
 
@@ -125,8 +129,13 @@ public class BlockMob extends BukkitRunnable implements Listener {
             return;
         }
 
+        if (this.invincibleCount > 0) {
+            return;
+        }
+
         this.hitPoint--;
-        armorStand.getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, armorStand.getLocation(), 3);
+        this.invincibleCount = 10;
+        armorStand.getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, armorStand.getLocation(), 4);
         armorStand.getWorld().playSound(armorStand.getLocation(),
                 this.block.getSoundGroup().getBreakSound(),
                 2,

@@ -22,4 +22,10 @@ public class BlockMobList {
         }
     }
 
+    public static void clearMob() {
+        for (BlockMob blockMob : list) {
+            blockMob.kill();
+        }
+    }
+
 }
