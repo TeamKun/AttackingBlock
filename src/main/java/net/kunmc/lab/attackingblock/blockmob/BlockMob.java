@@ -87,7 +87,7 @@ public class BlockMob extends BukkitRunnable implements Listener {
             BoundingBox playerBoundingBox = player.getBoundingBox();
 
             if (!blockBoundingBox.overlaps(playerBoundingBox)) {
-                return;
+                continue;
             }
 
             if (player.equals(this.target)) {
