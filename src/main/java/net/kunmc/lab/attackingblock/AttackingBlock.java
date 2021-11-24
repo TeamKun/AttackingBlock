@@ -2,8 +2,8 @@ package net.kunmc.lab.attackingblock;
 
 import dev.kotx.flylib.FlyLib;
 import net.kunmc.lab.attackingblock.command.Main;
-import net.kunmc.lab.attackingblock.event.PlayerEvent;
 import net.kunmc.lab.attackingblock.event.DigEvent;
+import net.kunmc.lab.attackingblock.event.PlayerEvent;
 import net.kunmc.lab.configlib.command.ConfigCommand;
 import net.kunmc.lab.configlib.command.ConfigCommandBuilder;
 import org.bukkit.plugin.java.JavaPlugin;

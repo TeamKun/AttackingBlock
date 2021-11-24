@@ -1,6 +1,5 @@
 package net.kunmc.lab.attackingblock.blockmob;
 
-import com.comphenix.protocol.wrappers.EnumWrappers;
 import net.kunmc.lab.attackingblock.AttackingBlock;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -17,7 +16,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
@@ -74,7 +72,7 @@ public class BlockMob extends BukkitRunnable implements Listener {
 
         // 無敵カウントを減らす
         if (this.invincibleCount > 0) {
-            invincibleCount --;
+            invincibleCount--;
         }
         // 当たり判定
         List<Entity> entityList = this.fallingBlock.getNearbyEntities(1, 1, 1);
@@ -125,7 +123,7 @@ public class BlockMob extends BukkitRunnable implements Listener {
 
         this.target = player;
         Vector direction = player.getLocation().getDirection();
-        if (!boundingBox.overlaps(player.getEyeLocation().toVector(),player.getEyeLocation().add(direction.multiply(3)).toVector())) {
+        if (!boundingBox.overlaps(player.getEyeLocation().toVector(), player.getEyeLocation().add(direction.multiply(3)).toVector())) {
             return;
         }
 
@@ -141,7 +139,7 @@ public class BlockMob extends BukkitRunnable implements Listener {
                 2,
                 0);
         // HPチェック
-        if(this.hitPoint <= 0) {
+        if (this.hitPoint <= 0) {
             this.kill();
             return;
         }

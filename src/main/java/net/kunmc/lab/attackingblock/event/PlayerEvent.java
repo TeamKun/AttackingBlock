@@ -1,14 +1,11 @@
 package net.kunmc.lab.attackingblock.event;
 
 import net.kunmc.lab.attackingblock.AttackingBlock;
-import net.kunmc.lab.attackingblock.blockmob.BlockMob;
 import net.kunmc.lab.attackingblock.blockmob.BlockMobList;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerEvent implements Listener {
     @EventHandler(ignoreCancelled = true)
