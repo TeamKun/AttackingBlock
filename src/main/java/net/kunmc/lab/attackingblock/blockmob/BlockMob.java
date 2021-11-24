@@ -74,14 +74,21 @@ public class BlockMob extends BukkitRunnable implements Listener {
         if (this.invincibleCount > 0) {
             invincibleCount--;
         }
+
         // 当たり判定
         List<Entity> entityList = this.fallingBlock.getNearbyEntities(1, 1, 1);
+        BoundingBox blockBoundingBox = this.fallingBlock.getBoundingBox();
         for (Entity entity : entityList) {
             if (entity.getType() != EntityType.PLAYER) {
                 continue;
             }
 
             Player player = (Player) entity;
+            BoundingBox playerBoundingBox = player.getBoundingBox();
+
+            if (!blockBoundingBox.overlaps(playerBoundingBox)) {
+                return;
+            }
 
             if (player.equals(this.target)) {
                 player.damage(AttackingBlock.config.damage.value());
