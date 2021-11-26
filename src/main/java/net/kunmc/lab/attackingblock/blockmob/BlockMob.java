@@ -128,7 +128,7 @@ public class BlockMob extends BukkitRunnable implements Listener {
             return;
         }
 
-        this.target = player;
+
         Vector direction = player.getLocation().getDirection();
         if (!boundingBox.overlaps(player.getEyeLocation().toVector(), player.getEyeLocation().add(direction.multiply(3)).toVector())) {
             return;
@@ -140,6 +140,7 @@ public class BlockMob extends BukkitRunnable implements Listener {
 
         this.hitPoint--;
         this.invincibleCount = 10;
+        this.target = player;
         armorStand.getWorld().spawnParticle(Particle.DAMAGE_INDICATOR, armorStand.getLocation(), 4);
         armorStand.getWorld().playSound(armorStand.getLocation(),
                 this.block.getSoundGroup().getBreakSound(),
